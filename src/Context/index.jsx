@@ -52,6 +52,9 @@ export const InventoryProvider = ({children}) => {
     setProductMenu(productMenu === productId ? null : productId)
   }
 
+
+  const [ isOpenCreateProductModal, setIsOpenCreateProductModal] = useState(false)
+
   return (
     <InventoryContext.Provider value={{
       items,
@@ -79,7 +82,9 @@ export const InventoryProvider = ({children}) => {
       openStockFormOpen,
       closeStockFormOpen,
       productToShow,
-      setProductToShow
+      setProductToShow,
+      isOpenCreateProductModal,
+      setIsOpenCreateProductModal
     }}>
       {children}
     </InventoryContext.Provider>
