@@ -36,7 +36,10 @@ const CreateProduct = () => {
         <span> 
           <XMarkIcon
             className="size-7 text-gray-600"
-            onClick={() => setIsOpenCreateProductModal(false)}></XMarkIcon>
+            onClick={() => {
+              setQuantities('')
+              setIsOpenCreateProductModal(false)
+            }}></XMarkIcon>
         </span>
       </div>
     <form className="flex flex-col" onSubmit={(event) => createNewProduct(event)}>  
@@ -72,7 +75,10 @@ const CreateProduct = () => {
         Crear</button>
         <button 
           className="py-1 px-2 h-8 w-max bg-white rounded shadow-sm self-center text-sm border" type="button"
-          onClick={() => setIsOpenCreateProductModal(false)}>
+          onClick={() => {
+            setQuantities('')
+            setIsOpenCreateProductModal(false)
+          }}>
         Cancelar</button>
       </div>
     </form>
