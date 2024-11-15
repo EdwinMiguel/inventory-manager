@@ -36,7 +36,10 @@ export const InventoryProvider = ({children}) => {
     setIsProductDetailOpen(true)
     setProductMenu(false)
   }
-  const closeProductDetail = () => setIsProductDetailOpen(false)
+  const closeProductDetail = () => {
+    setIsEditpProductOn(false)
+    setIsProductDetailOpen(false)
+  }
 
   const [notification, setNotification ] = useState(false)
   const [notificationToShow, setNotificationToShow ] = useState({})
@@ -54,6 +57,11 @@ export const InventoryProvider = ({children}) => {
 
 
   const [ isOpenCreateProductModal, setIsOpenCreateProductModal] = useState(false)
+
+  const [quantityValue, setQuantityValue ] = useState('')
+  const [quantities, setQuantities] = useState([])
+
+  const [ isEditProductOn, setIsEditpProductOn ] = useState(false)
 
   return (
     <InventoryContext.Provider value={{
@@ -84,7 +92,13 @@ export const InventoryProvider = ({children}) => {
       productToShow,
       setProductToShow,
       isOpenCreateProductModal,
-      setIsOpenCreateProductModal
+      setIsOpenCreateProductModal,
+      quantityValue, 
+      setQuantityValue,
+      quantities, 
+      setQuantities,
+      isEditProductOn,
+      setIsEditpProductOn
     }}>
       {children}
     </InventoryContext.Provider>

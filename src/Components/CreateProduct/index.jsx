@@ -3,17 +3,12 @@ import { useContext, useState } from "react"
 import { InventoryContext } from "../../Context";
 
 const CreateProduct = () => {
-  const [quantityValue, setQuantityValue ] = useState('')
-  const [quantities, setQuantities] = useState([])
-  
-  const { setIsOpenCreateProductModal } = useContext(InventoryContext)
-
-  const addQuantityToList = (quantity) => {
-    if (typeof(quantity) !== String) {
-    setQuantities([...quantities, quantity])
-    setQuantityValue('')      
-    }
-  }
+  const { 
+    setIsOpenCreateProductModal,
+    quantityValue, 
+    setQuantityValue,
+    quantities, 
+    setQuantities } = useContext(InventoryContext)
 
   const createNewProduct = (event) => {
     event.preventDefault()
@@ -21,6 +16,15 @@ const CreateProduct = () => {
     const formDataToObject = Object.fromEntries(data)
     formDataToObject.quantities = quantities
     console.log(formDataToObject);
+  }
+
+  const addQuantityToList = (quantity) => {
+    if (typeof(quantity) !== String) {
+      const combinedQuantities = [...quantities, quantity]
+      const uniqueQuantities = [...new Set(combinedQuantities)]
+      setQuantities(uniqueQuantities)
+      setQuantityValue('')
+    }
   }
 
   return (
