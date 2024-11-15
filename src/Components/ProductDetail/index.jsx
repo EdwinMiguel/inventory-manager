@@ -9,7 +9,7 @@ const ProductDetail = () => {
   } = useContext(InventoryContext)
 
   return (
-    <div className="w-80 h-screen p-4 border solid absolute bg-white right-0 rounded shadow-md">
+    <div className="w-96 h-screen p-4 border solid absolute bg-white right-0 rounded shadow-md">
       <div className="flex w-full justify-end">
         <span> 
           <ChevronUpDownIcon className="size-7 rotate-45 text-gray-600 mr-1"></ChevronUpDownIcon>
