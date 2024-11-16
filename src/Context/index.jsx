@@ -7,6 +7,8 @@ export const InventoryContext = createContext()
 export const InventoryProvider = ({children}) => {
   // data fetched
   const { items, loading, error, refetch } = useOrders();
+
+  const [products, setProducts ] = useState([])
   
   const [orderToShow, setOrderToShow ] = useState({})
   const [ productToShow, setProductToShow ] = useState({})
@@ -68,7 +70,9 @@ export const InventoryProvider = ({children}) => {
       items,
       itemsCount,
       loading, 
-      error, 
+      error,
+      products, 
+      setProducts,
       refetch,
       openOrderDetails,
       closeOrderDetails,

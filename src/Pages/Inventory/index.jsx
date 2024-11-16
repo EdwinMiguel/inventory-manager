@@ -9,9 +9,11 @@ import CreateProduct from "../../Components/CreateProduct"
 
 
 const Inventory = () => {
-  const [products, setProducts ] = useState([])
-  const { isOpenCreateProductModal,
-    setIsOpenCreateProductModal } = useContext(InventoryContext)
+  const { 
+    isOpenCreateProductModal,
+    setIsOpenCreateProductModal,
+    products, 
+    setProducts } = useContext(InventoryContext)
 
   const {
     openStockFormOpen,
@@ -91,14 +93,14 @@ const Inventory = () => {
 
       {notification && (
         <div 
-          className="flex flex-col w-80 h-auto p-4 mr-4 mb-4 border solid rounded border-green-900 absolute bottom-0 right-0 bg-green-100 shadow-md">
+          className="flex flex-col w-80 h-auto p-4 mr-4 mb-4 border solid rounded border-green-900 absolute bottom-0 left-0 bg-green-100 shadow-md">
           <span>
             <XMarkIcon 
             className="size-6 place-self-end text-green-900"
             onClick={() => closeNotification()}></XMarkIcon>
           </span>
         <p 
-          className="w--max h-max text-green-600 font-bold">{`Se registro ${notificationToShow.quantity} ${notificationToShow.unit} de ${notificationToShow["product-name"]}.`}</p>
+          className="w-max h-max text-green-600 font-bold">{notificationToShow.success ? notificationToShow.message : `Se registro ${notificationToShow.quantity} ${notificationToShow.unit} de ${notificationToShow["product-name"]}.`}</p>
       </div>  
     )}
 
