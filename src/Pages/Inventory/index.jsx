@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react"
 import Layout from "../../Components/Layout"
 import { InventoryContext } from "../../Context"
 import Product from "../../Components/Product"
-import Form from "../../Components/Form"
 import { ArrowDownIcon, XMarkIcon, DocumentPlusIcon } from "@heroicons/react/16/solid"
 import ProductDetail from "../../Components/ProductDetail"
 import CreateProduct from "../../Components/CreateProduct"
+import StockEntryForm from "../../Components/StockEntryForm"
 
 
 const Inventory = () => {
@@ -24,7 +24,7 @@ const Inventory = () => {
     notificationToShow } = useContext(InventoryContext)
 
     useEffect(() => {
-      fetch('https://api-pizzeria.vercel.app/api/v1/products')
+      fetch("https://api-pizzeria.vercel.app/api/v2/products")
         .then(response => response.json())
         .then(data => setProducts(data))
     }, [])
@@ -81,14 +81,14 @@ const Inventory = () => {
           </thead>
           <tbody>
             {products?.map((item) => (
-              <Product key={item["product-name"]} data={item} />
+              <Product key={item.idProduct} data={item} />
             ))}
           </tbody>
         </table>
       </div>
 
       {isStockFormOpen && (
-        <Form />
+        <StockEntryForm />
       )}
 
       {notification && (

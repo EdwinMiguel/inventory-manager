@@ -24,7 +24,6 @@ const CreateProduct = () => {
       const values = new FormData(event.target)
       const data = Object.fromEntries(values)
       data.quantities = quantities
-      console.log(data);
 
       const response = await fetch("https://api-pizzeria.vercel.app/api/v2/products", {
         method: 'POST',

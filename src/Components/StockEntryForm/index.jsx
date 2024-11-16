@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { InventoryContext } from "../../Context"
 import { ArrowDownIcon, ChevronUpDownIcon,XMarkIcon } from "@heroicons/react/16/solid"
 
-const Form = () => {
+const StockEntryForm = () => {
   const { 
     showNotification,
     isStockFormOpen,
@@ -48,16 +48,19 @@ const Form = () => {
   }
   
   return (
-    <div className="p-4 border solid absolute bg-white right-0 rounded shadow-md">
-      <div className="flex w-full justify-end">
-        <span> 
-          <ChevronUpDownIcon className="size-7 rotate-45 text-gray-600"></ChevronUpDownIcon>
-        </span>
-        <span> 
-          <XMarkIcon 
-            className="size-7 text-gray-600"
-            onClick={() => closeStockFormOpen()}></XMarkIcon>
-        </span>
+    <div className="w-96 p-4 border solid absolute bg-white right-0 rounded shadow-md">
+      <div className="flex w-full justify-between">
+      <h3 className="self-center font-bold text-3xl">Ingreso de stock</h3>
+        <div className="flex self-center h-max">
+          <span className="mr-2"> 
+            <ChevronUpDownIcon className="size-7 rotate-45 text-gray-600"></ChevronUpDownIcon>
+          </span>
+          <span> 
+            <XMarkIcon 
+              className="size-7 text-gray-600"
+              onClick={() => closeStockFormOpen()}></XMarkIcon>
+          </span>
+        </div>
       </div>
     <form onSubmit={(event) => saveStock(event)}>
         <div className="flex flex-col">
@@ -134,4 +137,4 @@ const Form = () => {
   )
 }
 
-export default Form
+export default StockEntryForm

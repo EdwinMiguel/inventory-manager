@@ -20,11 +20,16 @@ const Product = (data) => {
       className="hover:bg-slate-200 relative">
         <td className="flex">
           <input type="checkbox" />
-          <span>{data.data.nombre}</span>
+          <span>{data.data.name}</span>
         </td>
-        <td>{data.data.categoria}</td>
+        <td>{data.data.category.name}</td>
         <td>{data.data.stock}</td>
-        <td>{data.data.precio}</td>
+        <td>{new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }).format(data.data.price)}</td>
         <td>
           <EllipsisHorizontalIcon 
             className="w-6 h-6 cursor-pointer"

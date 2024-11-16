@@ -43,7 +43,7 @@ const ProductDetail = () => {
             onClick={() => closeProductDetail()}></XMarkIcon>
         </span>
       </div>
-      <span className="text-5xl font-bold w-full break-words hyphens-auto">{productToShow.nombre}</span>
+      <span className="text-5xl font-bold w-full break-words hyphens-auto">{productToShow.name}</span>
       <div className="flex gap-2 mt-4 mb-4">
         <button 
           className="py-1 px-2 h-8 w-max bg-black rounded text-white shadow-sm self-center text-sm"
@@ -64,17 +64,17 @@ const ProductDetail = () => {
         <form className="flex flex-col w-full gap-2" onSubmit={(event) => updateProduct(event)}>
           <div className="flex justify-between">
             <label className="text-gray-500">Id</label>
-            <input className="text-right outline-none" type="number" value={productToShow["id_producto"]} name="id" readOnly/>
+            <input className="text-right outline-none" type="number" value={productToShow.idProduct} name="id" readOnly/>
           </div>
           <div className="flex justify-between">
             <label className="text-gray-500">Nombre</label>
             <input 
-            className="text-right bg-white border solid rounded outline-slate-300 shadow-inner" type="text" placeholder={productToShow.nombre} name="name"/>
+            className="text-right bg-white border solid rounded outline-slate-300 shadow-inner" type="text" placeholder={productToShow.name} name="name"/>
           </div>
           <div className="flex justify-between">
             <label className="text-gray-500">Precio</label>
             <input 
-              className="text-right bg-white border solid rounded outline-slate-300 shadow-inner" type="number" min={1} placeholder={productToShow.precio.replace('$', '')} name="price"/>
+              className="text-right bg-white border solid rounded outline-slate-300 shadow-inner" type="number" min={1} placeholder={productToShow.price} name="price"/>
           </div>
           <div className="flex justify-between">
             <label className="text-gray-500">Categoria</label>
@@ -87,7 +87,7 @@ const ProductDetail = () => {
           </div>
           <div className="flex justify-between" >
             <label className="text-gray-500">Presentaciones</label>
-              <input className="w-6/12 mr-1 bg-white border solid rounded outline-slate-300 shadow-inner" type="number" value={quantityValue} onChange={(e) => setQuantityValue(e.target.value)} name="quantities" placeholder={productToShow.presentacion}/>
+              <input className="w-6/12 mr-1 bg-white border solid rounded outline-slate-300 shadow-inner" type="number" value={quantityValue} onChange={(e) => setQuantityValue(e.target.value)} name="quantities" placeholder={productToShow.quantities}/>
               <button 
                 className="px-2 w-max bg-black rounded text-white shadow-sm self-center text-sm cursor-pointer"
                 onClick={() => parseInt(quantityValue) > 0 && addQuantityToList(quantityValue)} type="button">+</button>
@@ -95,7 +95,7 @@ const ProductDetail = () => {
           <span className="h-24 break-words">{`Cantidades de: ${quantities.length !== false && (quantities)}`}</span>
           <div className="flex justify-between">
             <label className="text-gray-500">Descripción</label>
-            <textarea className="bg-white border solid rounded outline-slate-300 shadow-inner" name="description" placeholder={productToShow.descripcion}></textarea>
+            <textarea className="bg-white border solid rounded outline-slate-300 shadow-inner" name="description" placeholder={productToShow.description}></textarea>
           </div>
           <div className="flex justify-between">
             <label className="text-gray-500">Stock</label>
@@ -103,7 +103,7 @@ const ProductDetail = () => {
           </div>
           <div className="flex justify-between">
             <label className="text-gray-500">Total</label>
-            <input className="text-right bg-white border solid rounded outline-slate-300 shadow-inner" type="number" min={1} placeholder={productToShow.total.replace('$', '')} name="total"/>
+            <input className="text-right outline-none" type="number" value={productToShow.basePrice} name="total" readOnly/>
           </div>
           <div className="flex justify-between">
               <button className="py-1 px-2 h-8 w-max bg-black rounded text-white shadow-sm self-center text-sm" type="submit">Guardar</button>
@@ -116,27 +116,32 @@ const ProductDetail = () => {
         <div className="flex flex-col w-full gap-2">         
         <p className="flex justify-between">
           <span className="text-gray-500">Id</span>
-          <span className="text-right">{productToShow["id_producto"]}</span>
+          <span className="text-right">{productToShow.idProduct}</span>
         </p>
         <p className="flex justify-between">
             <span className="text-gray-500">Nombre</span>
-            <span className="text-right">{productToShow.nombre}</span>
+            <span className="text-right">{productToShow.name}</span>
           </p>
         <div className="flex justify-between">
           <span className="text-gray-500">Precio</span>
-          <span className="text-right">{productToShow.precio}</span>
+          <span className="text-right">{new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }).format(productToShow.price)}</span>
         </div>
         <p className="flex justify-between">
         <span className="text-gray-500">Categoria</span>
-        <span className="text-right">{productToShow.categoria}</span>
+        <span className="text-right">{productToShow.category.name}</span>
         </p>
         <p className="flex justify-between">
           <span className="text-gray-500">Presentaciones</span>
-          <span className="text-right">{productToShow.presentacion}</span>
+          <span className="text-right">{productToShow.quantities.map(quantity => `${quantity},`)}</span>
         </p>
         <p className="flex justify-between">
           <span className="text-gray-500">Descripción</span>
-          <span className="text-right">{productToShow.descripcion}</span>
+          <span className="text-right">{productToShow.description}</span>
         </p>
         <p className="flex justify-between">
           <span className="text-gray-500">Stock</span>
@@ -144,7 +149,12 @@ const ProductDetail = () => {
         </p>
         <p className="flex justify-between">
           <span className="text-gray-500">Total</span>
-          <span className="text-right">{productToShow.total}</span>
+          <span className="text-right">{new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }).format(productToShow.basePrice)}</span>
         </p>
       </div>
       )}
