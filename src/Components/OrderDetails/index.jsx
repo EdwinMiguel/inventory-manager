@@ -24,7 +24,7 @@ const OrderDetails = () => {
       </div>
       <div className='p-4 border-t border-b'>
         {orderToShow.products.map((product) => (
-          <p className='flex justify-between'>
+          <p className='flex justify-between' key={product.idProduct}>
             <span>{product.name}</span>
             <span>{product.quantity} x {product.totalPrice}</span>  
           </p>

@@ -100,7 +100,7 @@ const Inventory = () => {
             onClick={() => closeNotification()}></XMarkIcon>
           </span>
         <p 
-          className="w-max h-max text-green-600 font-bold">{notificationToShow.success ? notificationToShow.message : `Se registro ${notificationToShow.quantity} ${notificationToShow.unit} de ${notificationToShow["product-name"]}.`}</p>
+          className="w-max h-max text-green-700 font-bold">{notificationToShow.success ? notificationToShow.message : `Se registro ${notificationToShow.quantity} ${notificationToShow.measurementUnit} de ${notificationToShow.name}.`}</p>
       </div>  
     )}
 
