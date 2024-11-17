@@ -13,6 +13,7 @@ const ProductDetail = () => {
 
 
   const [quantities, setQuantities] = useState([])
+  const [isProductDetailExpanded, setIsProductDetailExpanded ] = useState(false)
 
   const addQuantityToList = (quantity) => {
     if (typeof(quantity) !== String) {
@@ -31,10 +32,16 @@ const ProductDetail = () => {
     console.log(dataToObject);
     console.log(productToShow);
   }
+
+  const toggleExpandDetail = () => {
+
+    setIsProductDetailExpanded(!isProductDetailExpanded)
+  }
+
   return (
-    <div className="w-96 h-screen p-4 border solid absolute bg-white right-0 rounded shadow-md">
+    <div className={`${isProductDetailExpanded && ("w-[calc(100%/1)] col-start-2")} w-96 h-screen p-4 border solid absolute bg-white right-0 rounded shadow-md`}>
       <div className="flex w-full justify-end">
-        <span> 
+        <span onClick={() => toggleExpandDetail()}> 
           <ChevronUpDownIcon className="size-7 rotate-45 text-gray-600 mr-1"></ChevronUpDownIcon>
         </span>
         <span>
@@ -86,7 +93,7 @@ const ProductDetail = () => {
             </select>
           </div>
           <div className="flex justify-between" >
-            <label className="text-gray-500">Presentaciones</label>
+            <label className="text-gray-500">Cantidades</label>
               <input className="w-6/12 mr-1 bg-white border solid rounded outline-slate-300 shadow-inner" type="number" value={quantityValue} onChange={(e) => setQuantityValue(e.target.value)} name="quantities" placeholder={productToShow.quantities}/>
               <button 
                 className="px-2 w-max bg-black rounded text-white shadow-sm self-center text-sm cursor-pointer"
@@ -136,7 +143,11 @@ const ProductDetail = () => {
         <span className="text-right">{productToShow.category.name}</span>
         </p>
         <p className="flex justify-between">
-          <span className="text-gray-500">Presentaciones</span>
+        <span className="text-gray-500">Unidad de medida</span>
+        <span className="text-right">{productToShow.measurementUnit}</span>
+        </p>
+        <p className="flex justify-between">
+          <span className="text-gray-500">Cantidades</span>
           <span className="text-right">{productToShow.quantities.map(quantity => `${quantity},`)}</span>
         </p>
         <p className="flex justify-between">
@@ -146,6 +157,18 @@ const ProductDetail = () => {
         <p className="flex justify-between">
           <span className="text-gray-500">Stock</span>
           <span className="text-right">{productToShow.stock}</span>
+        </p>
+        <p className="flex justify-between">
+          <span className="text-gray-500">Registros en el inventario</span>
+          <span className="text-right">{productToShow.inventoryRegistrations.length}</span>
+        </p>
+        <p className="flex justify-between">
+          <span className="text-gray-500">Entradas</span>
+          <span className="text-right">0</span>
+        </p>
+        <p className="flex justify-between">
+          <span className="text-gray-500">Salidas</span>
+          <span className="text-right">0</span>
         </p>
         <p className="flex justify-between">
           <span className="text-gray-500">Total</span>
