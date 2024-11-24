@@ -1,6 +1,6 @@
 import { ChevronUpDownIcon, XMarkIcon, PencilSquareIcon, PrinterIcon, EllipsisHorizontalIcon } from "@heroicons/react/16/solid"
 import { useContext, useState } from "react"
-import { InventoryContext } from "../../Context"
+import { ProductContext } from "../../Context/ProductContext"
 
 const ProductDetail = () => {
   const {
@@ -9,7 +9,7 @@ const ProductDetail = () => {
     setQuantityValue,
     quantityValue,
     isEditProductOn,
-    setIsEditpProductOn } = useContext(InventoryContext)
+    setIsEditpProductOn } = useContext(ProductContext)
 
 
   const [quantities, setQuantities] = useState([])

@@ -1,6 +1,6 @@
 import { EllipsisHorizontalIcon, PencilSquareIcon, EyeIcon, TrashIcon } from "@heroicons/react/16/solid"
 import { useContext } from "react"
-import { InventoryContext } from "../../Context"
+import { ProductContext } from "../../Context/ProductContext"
 
 const Product = (data) => {
   const { 
@@ -8,7 +8,7 @@ const Product = (data) => {
     productMenu, 
     openProductDetail, 
     setProductToShow,
-    setIsEditpProductOn } = useContext(InventoryContext)
+    setIsEditpProductOn } = useContext(ProductContext)
 
   const showProducDetail = (productData) => {
     setProductToShow(productData)
@@ -33,9 +33,9 @@ const Product = (data) => {
         <td>
           <EllipsisHorizontalIcon 
             className="w-6 h-6 cursor-pointer"
-            onClick={() => toggleOpenProductMenu(data.data["id_producto"])}></EllipsisHorizontalIcon>
+            onClick={() => toggleOpenProductMenu(data.data.idProduct)}></EllipsisHorizontalIcon>
         </td>
-        {productMenu === data.data["id_producto"] && (
+        {productMenu === data.data.idProduct && (
           <div 
             className="flex w-max h-max p-2 rounded border solid absolute bg-white top-6 right-6 z-10">
             <p className="flex flex-col">

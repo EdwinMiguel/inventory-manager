@@ -1,5 +1,7 @@
 import { useRoutes, BrowserRouter } from 'react-router-dom'
 import { InventoryProvider } from '../../Context'
+import { OrderProvider } from '../../Context/OrderContext'
+import { ProductProvider } from '../../Context/ProductContext'
 import AsideBar from '../../Components/AsideBar'
 import NavBar from '../../Components/NavBar'
 import Home from '../Home'
@@ -34,13 +36,17 @@ const AppRoutes = () => {
 const App = () => {
   return (
     <InventoryProvider>
-      <BrowserRouter>
-        <AsideBar>
-          <NavBar />
-        </AsideBar>
-        <AppRoutes />
-        <RigthSideBar />
-      </BrowserRouter>
+      <OrderProvider>
+        <ProductProvider>
+          <BrowserRouter>
+            <AsideBar>
+              <NavBar />
+            </AsideBar>
+            <AppRoutes />
+            <RigthSideBar />
+          </BrowserRouter>
+        </ProductProvider>
+      </OrderProvider>
     </InventoryProvider>
 
   )

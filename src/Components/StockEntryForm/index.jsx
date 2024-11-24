@@ -1,15 +1,13 @@
 import { useContext, useState } from "react"
-import { InventoryContext } from "../../Context"
+import { ProductContext } from "../../Context/ProductContext"
 import { ArrowDownIcon, ChevronUpDownIcon,XMarkIcon } from "@heroicons/react/16/solid"
 
 const StockEntryForm = () => {
   const {
     products,
     showNotification,
-    isStockFormOpen,
-    openStockFormOpen,
     closeStockFormOpen
-  } = useContext(InventoryContext)
+  } = useContext(ProductContext)
 
   const [loading, setLoading ] = useState(false)
 
@@ -47,6 +45,7 @@ const StockEntryForm = () => {
       }
       
       const rta = await response.json();
+      console.log(rta);
       return rta;
     } catch (error) {
      console.error(error);

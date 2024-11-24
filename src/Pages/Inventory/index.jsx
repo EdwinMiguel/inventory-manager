@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import Layout from "../../Components/Layout"
-import { InventoryContext } from "../../Context"
+import { ProductContext } from "../../Context/ProductContext"
 import Product from "../../Components/Product"
 import { ArrowDownIcon, XMarkIcon, DocumentPlusIcon } from "@heroicons/react/16/solid"
 import ProductDetail from "../../Components/ProductDetail"
@@ -13,16 +13,13 @@ const Inventory = () => {
     isOpenCreateProductModal,
     setIsOpenCreateProductModal,
     products, 
-    setProducts } = useContext(InventoryContext)
-
-  const {
+    setProducts,
     openStockFormOpen,
     isStockFormOpen,
     notification,
     closeNotification,
     isProductDetailOpen,
-    notificationToShow } = useContext(InventoryContext)
-
+    notificationToShow } = useContext(ProductContext)
     useEffect(() => {
       fetch("https://api-pizzeria.vercel.app/api/v2/products")
         .then(response => response.json())

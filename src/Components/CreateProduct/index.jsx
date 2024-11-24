@@ -1,6 +1,6 @@
 import { ChevronUpDownIcon, DocumentPlusIcon, XMarkIcon } from "@heroicons/react/16/solid"
 import { useContext, useState } from "react"
-import { InventoryContext } from "../../Context";
+import { ProductContext } from "../../Context/ProductContext";
 
 
 const CreateProduct = () => {
@@ -11,7 +11,7 @@ const CreateProduct = () => {
     quantities, 
     setQuantities,
     showNotification,
-    setProducts } = useContext(InventoryContext)
+    setProducts } = useContext(ProductContext)
 
   const [loading, setLoading ] = useState(false)
 
