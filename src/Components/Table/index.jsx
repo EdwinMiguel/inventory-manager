@@ -23,7 +23,7 @@ const Table = () => {
   const handleUpdateStatus = async (orderId, newStatus) => {
     try {
       // Llamada a tu API para actualizar el estado
-      const response = await fetch(`http://localhost:3000/api/v2/orders/${orderId}/status`, { 
+      const response = await fetch(`https://api-pizzeria.vercel.app/api/v2/orders/${orderId}/status`, { 
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
