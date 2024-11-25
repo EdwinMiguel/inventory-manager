@@ -15,7 +15,6 @@ export const ProductProvider = ({children}) => {
   const [isProductDetailOpen, setIsProductDetailOpen ] = useState(false)
   const openProductDetail = () => {
     setIsProductDetailOpen(true)
-    setProductMenu(false)
   }
   const closeProductDetail = () => {
     setIsEditpProductOn(false)
@@ -30,12 +29,6 @@ export const ProductProvider = ({children}) => {
   }
 
   const closeNotification = () => setNotification(false)
-
-  const [ productMenu, setProductMenu ] = useState(false)
-  const toggleOpenProductMenu = (productId) => {
-    setProductMenu(productMenu === productId ? null : productId)
-  }
-
 
   const [quantityValue, setQuantityValue ] = useState('')
   const [quantities, setQuantities] = useState([])
@@ -66,7 +59,6 @@ export const ProductProvider = ({children}) => {
       setQuantities,
       showNotification,
       closeStockFormOpen,
-      toggleOpenProductMenu
     }}>
       {children}
     </ProductContext.Provider>
