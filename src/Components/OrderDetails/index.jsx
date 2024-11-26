@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { OrderContext } from '../../Context/OrderContext'
 import { XMarkIcon, ChevronUpDownIcon } from '@heroicons/react/24/solid'
 import { EllipsisHorizontalIcon, PencilSquareIcon, PrinterIcon } from '@heroicons/react/16/solid'
@@ -7,6 +7,8 @@ const OrderDetails = () => {
   const {
     setIsOrderDetailsOpen,
     orderToShow } = useContext(OrderContext)
+  
+  const iframeRef = useRef(null);
 
   const [isEditing, setIsEditing] = useState(false)
 
@@ -126,9 +128,90 @@ const OrderDetails = () => {
   }
  }
 
+ const HandlePrint = () => {
+  const orderHtml = `
+    <header class="car_header">        
+      <img src="./Imagenes/logo_drive.png" alt="logo drive pizza">
+      <h1>PEDIDO SEDE</h1>
+    </header>
+      <form class="car_container">
+        <div class="car_data_container">        
+          <div class="car_data_branch">
+            <p>SEDE</p>
+            <p id="sede-name">${orderToShow.user}</p>
+          </div>  
+          <div class="car_data_date">
+            <p>FECHA</p>
+            <p id="delibery-date">${orderToShow.deliveryDate}</p>
+          </div>  
+        </div>
+        <table class="car_product_list">
+          <thead class="table_head">
+              <tr>
+                  <th>PRODUCTO</th>
+                  <th>CANTIDAD</th>
+                  <th>VALOR</th>
+              </tr>
+          </thead>
+          <tbody class="table_body" id="table-body">
+
+            ${orderToShow.products.map(product => {
+              return `<tr>
+                  <td>${product.name}</td>
+                  <td>${product.quantity}</td>
+                  <td>${new Intl.NumberFormat('es-CO', {
+              style: 'currency',
+              currency: 'COP',
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2
+            }).format(product.totalPrice)}</td>
+              </tr>`
+
+            }
+            )}
+          </tbody>
+        </table>
+        <div class="car_data_observation">
+            <p>OBSERVACIÓN:</p>
+            <p id="comment">${orderToShow.orderNotes}</p>          
+        </div>  
+        <div class="car_total" id="total">
+            Total Productos: <span id="total-amount">${orderToShow.products.length}</span>
+        </div>
+        <div class="car_total" id="valor-neto">
+            Valor Neto: <span id="valor-neto-amount">${new Intl.NumberFormat('es-CO', {
+              style: 'currency',
+              currency: 'COP',
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2
+            }).format(orderToShow.netCost)}</span>
+        </div>
+        <div class="car_total" id="valor-servicio">
+            Valor con servicio: <span id="valor-servicio-amount">${new Intl.NumberFormat('es-CO', {
+              style: 'currency',
+              currency: 'COP',
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2
+            }).format(orderToShow.surchargedPrice)}</span>
+        </div>
+      </form>
+  `
+  const iframe = iframeRef.current;
+  if (iframe) {
+    // Escribir el contenido en el iframe
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(orderHtml);
+    iframe.contentDocument.close();
+
+    // Disparar la acción de impresión
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+  }
+ }
+
   return (
     <div 
-      className={`flex w-96 flex-col border solid rounded-lg absolute bg-white overflow-hidden`}>
+      className={`flex w-96 flex-col border solid rounded-lg absolute bg-white overflow-hidden right-0 h-screen`}>
       <div className="bg-black text-white flex justify-between px-4 py-2">
         <h2>{`Pedido #${orderToShow.idOrder}`}</h2>
         <div>
@@ -251,7 +334,10 @@ const OrderDetails = () => {
               <PencilSquareIcon 
                 className="size-4 inline-block mr-1"></PencilSquareIcon>
               Editar</button>
-            <button className="py-1 px-2 h-8 w-max bg-white rounded self-center border solid text-sm shadow-sm">
+            <button 
+              className="py-1 px-2 h-8 w-max bg-white rounded self-center border solid text-sm shadow-sm"
+              onClick={HandlePrint}
+            >
               <PrinterIcon className="size-4 inline-block mr-1"></PrinterIcon>
               Imprimir</button>
             <button className="py-1 px-2 h-8 w-max bg-white rounded self-center border solid text-sm shadow-sm">
@@ -290,12 +376,18 @@ const OrderDetails = () => {
           <p className='flex justify-between mb-4'>
             <span>Total: </span>
             <span>
-              {orderToShow.surchargedPrice}
+              {new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+              }).format(orderToShow.surchargedPrice)}
             </span>
           </p>
         </div>
       )} 
       </div>
+      <iframe ref={iframeRef} style={{display: 'none'}}></iframe>
     </div>
   )
 }
