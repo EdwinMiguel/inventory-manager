@@ -11,11 +11,12 @@ const Table = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('https://api-pizzeria.vercel.app/api/v2/orders');
+      const response = await fetch('https://api-pizzeria.vercel.app/api/v2/orders')
       const data = await response.json()
-      setItems(data)
+      const ordersSortById = data.sort((a, b) => b.idOrder - a.idOrder)
+      setItems(ordersSortById)
     } catch (err) {
-      setError(err.message)
+      console.log(err.message)
     } finally {
     }
   }
