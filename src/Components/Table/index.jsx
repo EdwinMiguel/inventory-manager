@@ -1,25 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { OrderContext } from "../../Context/OrderContext";
 import TableHeader from "../TableHeader"
 import TableBody from "../TableBody"
 
 const Table = () => {
-  const [items, setItems] = useState(null)
-  
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
-    try {
-      const response = await fetch('https://api-pizzeria.vercel.app/api/v2/orders')
-      const data = await response.json()
-      const ordersSortById = data.sort((a, b) => b.idOrder - a.idOrder)
-      setItems(ordersSortById)
-    } catch (err) {
-      console.log(err.message)
-    } finally {
-    }
-  }
+  const { items } = useContext(OrderContext);
   
   const handleUpdateStatus = async (orderId, newStatus) => {
     try {

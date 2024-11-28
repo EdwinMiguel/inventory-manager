@@ -14,6 +14,7 @@ import MyAccount from '../MyAccount'
 import NotFound from '../NotFound'
 import RigthSideBar from '../../Components/RigthSideBar'
 import './App.css'
+import SearchBar from '../../Components/SearchBar'
 
 const AppRoutes = () => {
   
@@ -40,6 +41,7 @@ const App = () => {
         <ProductProvider>
           <BrowserRouter>
             <AsideBar>
+              <SearchBar />
               <NavBar />
             </AsideBar>
             <AppRoutes />
