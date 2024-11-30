@@ -118,7 +118,6 @@ const OrderDetails = () => {
       } else {
         throw new Error('Respuesta del servidor incompleta')
       }
-      setIsOrderDetailsOpen(false)
     }
   } catch (error) {
     console.log(error)
