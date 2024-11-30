@@ -54,7 +54,12 @@ const Item = ({ data, handleUpdateStatus }) => {
             </select>
           </div>
         </td>
-        <td>{data.surchargedPrice}</td>
+        <td>{new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+              }).format(data.surchargedPrice)}</td>
         <td className="relative">
           <EllipsisHorizontalIcon className="w-6 h-6 cursor-pointer" onClick={() => showOrder(data)}></EllipsisHorizontalIcon>
           <div className="hidden w-10 h-10 p-2 rounded border solid absolute bg-white top-3 -left-3">Ver</div>

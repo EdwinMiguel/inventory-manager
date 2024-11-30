@@ -4,7 +4,7 @@ import TableHeader from "../TableHeader"
 import TableBody from "../TableBody"
 
 const Table = () => {
-  const { items } = useContext(OrderContext);
+  const { items, setItems } = useContext(OrderContext);
   
   const handleUpdateStatus = async (orderId, newStatus) => {
     try {
@@ -17,13 +17,20 @@ const Table = () => {
         body: JSON.stringify({ status: newStatus })
       });
 
-      if (response.ok) {
-        const data = await response.json()
-        console.log(data);
-        // Actualizar el estado local solo si la API responde correctamente
-        setItems(items.map(order => 
-          order.idOrder === orderId ? { ...order, status: newStatus } : order
-        ));
+      if(!response.ok) {
+        throw new Error(responseData.message || `Error al actualizar cantidad del producto. Estado: ${response.status}`)
+      }
+      
+      const responseData = await response.json()
+      
+      // Verificar que los datos devueltos son correctos
+      if (responseData.success) {
+        const refreshResponse = await fetch(`https://api-pizzeria.vercel.app/api/v2/orders`)
+        const refreshData = await refreshResponse.json()
+        const ordersSortById = refreshData.sort((a, b) => b.idOrder - a.idOrder)
+        setItems(ordersSortById)
+      } else {
+        throw new Error('Respuesta del servidor incompleta')
       }
     } catch (error) {
       console.error('Error al actualizar el estado:', error);

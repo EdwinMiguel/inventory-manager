@@ -6,7 +6,7 @@ import { EllipsisHorizontalIcon, PencilSquareIcon, PrinterIcon } from '@heroicon
 const OrderDetails = () => {
   const {
     setIsOrderDetailsOpen,
-    orderToShow } = useContext(OrderContext)
+    orderToShow, setItems  } = useContext(OrderContext)
   
   const iframeRef = useRef(null);
 
@@ -111,10 +111,10 @@ const OrderDetails = () => {
       
       // Verificar que los datos devueltos son correctos
       if (responseData.success) {
-        // const refreshResponse = await fetch("https://api-pizzeria.vercel.app/api/v1/products");
-        // const refreshData = await refreshResponse.json();
-        // setProducts(refreshData);
-        console.log(responseData)
+        const refreshResponse = await fetch(`https://api-pizzeria.vercel.app/api/v2/orders`)
+        const refreshData = await refreshResponse.json()
+        const ordersSortById = refreshData.sort((a, b) => b.idOrder - a.idOrder)
+        setItems(ordersSortById)
       } else {
         throw new Error('Respuesta del servidor incompleta')
       }
@@ -279,6 +279,12 @@ const OrderDetails = () => {
             ))}
           </div>
           <p className='flex justify-between mb-4'>
+            <span>Total Neto: </span>
+            <span>
+              {orderToShow.netCost}
+            </span>
+          </p>
+          <p className='flex justify-between mb-4'>
             <span>Total:</span>
             <span>
               {orderToShow.surchargedPrice}
@@ -372,18 +378,28 @@ const OrderDetails = () => {
               </p>
             ))}
           </div>
-
-          <p className='flex justify-between mb-4'>
-            <span>Total: </span>
-            <span>
-              {new Intl.NumberFormat('es-CO', {
+            <p className='flex justify-between mb-4'>
+              <span>Total Neto: </span>
+              <span>
+                {new Intl.NumberFormat('es-CO', {
                 style: 'currency',
                 currency: 'COP',
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2
-              }).format(orderToShow.surchargedPrice)}
-            </span>
-          </p>
+              }).format(orderToShow.netCost)}
+              </span>
+            </p>
+            <p className='flex justify-between mb-4'>
+              <span>Total: </span>
+              <span>
+                {new Intl.NumberFormat('es-CO', {
+                  style: 'currency',
+                  currency: 'COP',
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2
+                }).format(orderToShow.surchargedPrice)}
+              </span>
+            </p>
         </div>
       )} 
       </div>
