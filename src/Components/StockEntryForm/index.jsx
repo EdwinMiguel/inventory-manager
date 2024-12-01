@@ -68,59 +68,69 @@ const StockEntryForm = () => {
         </div>
       </div>
     <form onSubmit={(event) => saveStock(event)}>
-        <div className="flex flex-col">
-            <label>Nombre del Producto:</label>
-            <select 
-              className="bg-white border solid rounded" name="idProduct" required>
-              {products.map(product => <option key={product.idProduct} value={product.idProduct}>{product.name}</option>)}
-            </select>
-            <label>Cantidad:</label>
-            <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
-            <label htmlFor="notes">Observaciones</label>
-            <textarea className="h-20 bg-white border solid rounded outline-slate-300 shadow-inner" name="notes"></textarea>
-        </div>
-        <div className="flex justify-between mt-4">
-        <button
-          className="py-1 px-2 h-8 w-max bg-black rounded text-white shadow-sm text-sm inline-flex items-center justify-center space-x-1" type="submit">
-          <ArrowDownIcon className="size-3 inline-block mr-1"></ArrowDownIcon>
-          Ingresar
-          {loading && (
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="xMidYMid"
-            className="ml-1"
-            >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="10"
-              r="35"
-              strokeDasharray="164.93361431346415 56.97787143782138"
-              transform="rotate(275.845 50 50)"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                calcMode="linear"
-                values="0 50 50;360 50 50"
-                keyTimes="0;1"
-                dur="1s"
-                begin="0s"
-                repeatCount="indefinite"
-              />
-            </circle>
-          </svg>
-        )}
-          </button>
-          <button 
-            className="py-1 px-2 h-8 w-max bg-white rounded shadow-sm self-center text-sm border" type="button"
-            onClick={() => closeStockFormOpen()}>
-          Cancelar</button>
-        </div>
+      <div className="flex flex-col">
+        <label>Nombre del Producto:</label>
+        <select 
+          className="bg-white border solid rounded" name="idProduct" required>
+          {products.map(product => <option key={product.idProduct} value={product.idProduct}>{product.name}</option>)}
+        </select>
+        <label>Cantidad:</label>
+        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
+        <label>Costo de la cantidad a ingresar:</label>
+        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
+        <label>Precio unitario:</label>
+        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
+        <label>Proveedor:</label>
+        <select>
+          <option>Proveedor 1</option>
+          <option>Proveedor 2</option>
+          <option>Proveedor 3</option>
+        </select>
+        <label htmlFor="notes">Observaciones</label>
+        <textarea className="h-20 bg-white border solid rounded outline-slate-300 shadow-inner" name="notes"></textarea>
+      </div>
+      <div className="flex justify-between mt-4">
+      <button
+        className="py-1 px-2 h-8 w-max bg-black rounded text-white shadow-sm text-sm inline-flex items-center justify-center space-x-1" type="submit">
+        <ArrowDownIcon className="size-3 inline-block mr-1"></ArrowDownIcon>
+        Ingresar
+        {loading && (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+          className="ml-1"
+          >
+          <circle
+            cx="50"
+            cy="50"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="10"
+            r="35"
+            strokeDasharray="164.93361431346415 56.97787143782138"
+            transform="rotate(275.845 50 50)"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              calcMode="linear"
+              values="0 50 50;360 50 50"
+              keyTimes="0;1"
+              dur="1s"
+              begin="0s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        </svg>
+      )}
+        </button>
+        <button 
+          className="py-1 px-2 h-8 w-max bg-white rounded shadow-sm self-center text-sm border" type="button"
+          onClick={() => closeStockFormOpen()}>
+        Cancelar</button>
+      </div>
     </form>
     
     </div>
