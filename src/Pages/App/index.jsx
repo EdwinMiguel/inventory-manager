@@ -13,8 +13,9 @@ import Notifications from '../Notifications'
 import MyAccount from '../MyAccount'
 import NotFound from '../NotFound'
 import RigthSideBar from '../../Components/RigthSideBar'
-import './App.css'
 import SearchBar from '../../Components/SearchBar'
+import Registrations from '../Registrations'
+import './App.css'
 
 const AppRoutes = () => {
   
@@ -23,6 +24,7 @@ const AppRoutes = () => {
     { path: '/Dashboard', element: <Home /> },
     { path: '/Orders', element: <Orders /> },
     { path: '/Inventory', element: <Inventory /> },
+    { path: '/registrations', element: <Registrations /> },
     { path: '/Payments', element: <Payments /> },
     { path: '/Customers', element: <Customers /> },
     { path: '/Notifications', element: <Notifications /> },

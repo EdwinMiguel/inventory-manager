@@ -5,6 +5,8 @@ import Table from "../../Components/Table"
 import Filters from "../../Components/Filters"
 import OrderDetails from "../../Components/OrderDetails";
 import KpiCard from "../../Components/KpiCard"
+import TableHeader from "../../Components/TableHeader"
+import TableBody from "../../Components/TableBody"
 
 function Orders() {
   const { isOrderDetailsOpen } = useContext(OrderContext);
@@ -16,7 +18,10 @@ function Orders() {
       <Filters />
 
       <div className="ml-8 flex-1 overflow-y-auto z-0">
-        <Table />
+        <Table>
+          <TableHeader />
+          <TableBody />
+        </Table>
       </div>
       {isOrderDetailsOpen && (<OrderDetails />)}
     </Layout>

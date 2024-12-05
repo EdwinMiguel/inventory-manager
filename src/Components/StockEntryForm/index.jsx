@@ -77,14 +77,15 @@ const StockEntryForm = () => {
         <label>Cantidad:</label>
         <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
         <label>Costo de la cantidad a ingresar:</label>
-        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
+        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="totalCost" min="1" required />
         <label>Precio unitario:</label>
-        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
+        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="unitPrice" min="1" required />
         <label>Proveedor:</label>
-        <select>
-          <option>Proveedor 1</option>
-          <option>Proveedor 2</option>
-          <option>Proveedor 3</option>
+        <select className="bg-white border solid rounded outline-slate-300" name="idSupplier">  
+          <option value="1">La Receta</option>
+          <option value="2">Macro</option>
+          <option value="3">Praismar</option>
+          <option value="4">Quintero</option>
         </select>
         <label htmlFor="notes">Observaciones</label>
         <textarea className="h-20 bg-white border solid rounded outline-slate-300 shadow-inner" name="notes"></textarea>

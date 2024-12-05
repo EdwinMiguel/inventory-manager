@@ -41,6 +41,16 @@ const NavBar = () => {
         </li>
         <li className="p-2 hover:bg-slate-500 rounded">
           <NavLink 
+            to='/registrations'
+            className={({ isActive }) =>
+              isActive ? activeStyle : undefined
+            } 
+            >
+            Registros
+          </NavLink>
+        </li>
+        <li className="p-2 hover:bg-slate-500 rounded">
+          <NavLink 
             to='/payments'
             className={({ isActive }) =>
               isActive ? activeStyle : undefined
