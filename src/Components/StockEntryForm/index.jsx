@@ -95,7 +95,7 @@ const StockEntryForm = () => {
         <label>Proveedor:</label>
         <select className="bg-white border solid rounded outline-slate-300" name="idSupplier">
           {
-            suppliers.map(supplier => <option value={supplier.idSuppliers}>{supplier.name}</option>)
+            suppliers.map(supplier => <option value={supplier.idSupplier}>{supplier.name}</option>)
           }
         </select>
         <label htmlFor="notes">Observaciones</label>
