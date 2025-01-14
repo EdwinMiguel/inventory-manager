@@ -1,5 +1,5 @@
 import { ChevronUpDownIcon, DocumentPlusIcon, XMarkIcon } from "@heroicons/react/16/solid"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ProductContext } from "../../Context/ProductContext";
 
 
@@ -14,6 +14,29 @@ const CreateProduct = () => {
     setProducts } = useContext(ProductContext)
 
   const [loading, setLoading ] = useState(false)
+  const [suppliers, setSuppliers] = useState([])
+  const [categories, setCategories] = useState([])
+
+  async function fetchSuppliersAndCategories () {
+    try {
+      const promises = [
+        fetch("https://api-pizzeria.vercel.app/api/v2/suppliers").then(response => response.json()),
+        fetch("https://api-pizzeria.vercel.app/api/v2/categories").then(response => response.json())
+      ];
+
+      const [suppliersData, categoriesData] = await Promise.all(promises);
+
+      setSuppliers(suppliersData);
+      setCategories(categoriesData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      //Debería tener un estado de error: setError(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchSuppliersAndCategories();
+  }, []);
 
   const createNewProduct = async (event) => {
     event.preventDefault()
@@ -23,7 +46,7 @@ const CreateProduct = () => {
 
       const values = new FormData(event.target)
       const data = Object.fromEntries(values)
-      data.quantities = quantities
+      data.quantities = quantities.join()
 
       const response = await fetch("https://api-pizzeria.vercel.app/api/v2/products", {
         method: 'POST',
@@ -108,21 +131,15 @@ const CreateProduct = () => {
       <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="text" name="name" required/>
       <label >Descripción:</label>
       <textarea className="bg-white border solid rounded outline-slate-300 shadow-inner" name="description" placeholder="escribe una descrición del producto"></textarea>
+      <label>Proveedor:</label>
+      <select className="bg-white border solid rounded outline-slate-300" name="idSuppliers">
+        {suppliers.map(supplier => <option key={supplier.idSupplier} value={supplier.idSupplier}>{supplier.name}</option>)}
+      </select>
       <label>precio por unidad:</label>
       <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" min="1" name="price" required />
       <label>categoría:</label>
       <select className="bg-white border solid rounded outline-slate-300" name="idCategory">
-        <option value="1">Pescados y Mariscos</option>
-        <option value="2">Azúcares</option>
-        <option value="3">Verduras y Conservas</option>
-        <option value="4">Carnes</option>
-        <option value="5">Pasta y Fideos</option>
-        <option value="6">Harinas y Masa</option>
-        <option value="7">Lácteos</option>
-        <option value="8">Especias y Condimentos</option>
-        <option value="9">Aceites y Salsas</option>
-        <option value="10">Embalajes</option>
-        <option value="11">Otros</option>
+        {categories.map(category => <option key={category.idCategory} value={category.idCategories}>{category.name}</option>)}
       </select>
       <label>unidad de almacenamiento:</label>
       <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="text" name="measurementUnit" required/>
