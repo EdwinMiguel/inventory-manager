@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ProductContext } from "../../Context/ProductContext"
 import { ArrowDownIcon, ChevronUpDownIcon,XMarkIcon } from "@heroicons/react/16/solid"
 
@@ -10,14 +10,30 @@ const StockEntryForm = () => {
   } = useContext(ProductContext)
 
   const [loading, setLoading ] = useState(false)
+  const [suppliers, setSuppliers ] = useState([])
+
+  async function getSuppliersData () {
+    try {
+      fetch("https://api-pizzeria.vercel.app/api/v2/suppliers")
+        .then(response => response.json())
+        .then(suppliersData => setSuppliers(suppliersData));
+    } catch (error) {
+      console.error('Error fetching suppliers data:', error);
+      //Debería tener un estado de error: setError(error);
+    }
+  }
+
+  useEffect(() => {
+    getSuppliersData();
+  }, []);
 
   const saveStock = async (event) => {
     try {
       setLoading(true)
       event.preventDefault()
-
       const formData = new FormData(event.target)
       const formDataToObject = Object.fromEntries(formData)
+      console.log(formDataToObject);
       const response = await postData(formDataToObject)
       if (response.success === true) {
         showNotification(response.savedData)
@@ -76,16 +92,11 @@ const StockEntryForm = () => {
         </select>
         <label>Cantidad:</label>
         <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="quantity" min="1" required />
-        <label>Costo de la cantidad a ingresar:</label>
-        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="totalCost" min="1" required />
-        <label>Precio unitario:</label>
-        <input className="bg-white border solid rounded outline-slate-300 shadow-inner" type="number" name="unitPrice" min="1" required />
         <label>Proveedor:</label>
-        <select className="bg-white border solid rounded outline-slate-300" name="idSupplier">  
-          <option value="1">La Receta</option>
-          <option value="2">Macro</option>
-          <option value="3">Praismar</option>
-          <option value="4">Quintero</option>
+        <select className="bg-white border solid rounded outline-slate-300" name="idSupplier">
+          {
+            suppliers.map(supplier => <option value={supplier.idSuppliers}>{supplier.name}</option>)
+          }
         </select>
         <label htmlFor="notes">Observaciones</label>
         <textarea className="h-20 bg-white border solid rounded outline-slate-300 shadow-inner" name="notes"></textarea>
