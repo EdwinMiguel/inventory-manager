@@ -19,11 +19,12 @@ const TableBody = () => {
         body: JSON.stringify({ status: newStatus })
       });
 
-      if(!response.ok) {
-        throw new Error(responseData.message || `Error al actualizar cantidad del producto. Estado: ${response.status}`)
-      }
+      const responseData = await response.json();
       
-      const responseData = await response.json()
+      if(!responseData.success) {
+        const parsedResponse = JSON.parse(responseData.message);
+        throw new Error(responseData.message);
+      }
       
       // Verificar que los datos devueltos son correctos
       if (responseData.success) {
@@ -35,7 +36,8 @@ const TableBody = () => {
         throw new Error('Respuesta del servidor incompleta')
       }
     } catch (error) {
-      console.error('Error al actualizar el estado:', error);
+      alert(error.message);
+      console.error('Error al actualizar el estado:', error.message);
     }
   };
   
