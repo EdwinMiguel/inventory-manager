@@ -127,10 +127,117 @@ const OrderDetails = () => {
   }
  }
 
- const HandlePrint = () => {
+ const handlePrint = () => {
   const orderHtml = `
+    <style> 
+      .car_header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px 20px;
+        border-bottom: 2px solid gray; 
+      }
+      
+      .car_header img {
+        display: flex;
+        align-items:end;
+        width: 200px;
+      }
+
+      .car_header h1 {
+        display: flex;
+        align-items:end;
+        font-size: 30px;
+        margin-top: 20px;
+      }
+
+      .car_container {
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        padding: 20px 0;
+        margin: 0 auto;
+        font-size: 16px;
+      }
+
+      .car_data_branch , .car_data_date {
+        display: flex;
+        justify-content: space-between;
+        max-width: 400px;
+        margin: 0 auto;    
+      }
+
+      .car_data_branch p , .car_data_date p {
+        display: flex;
+        justify-content: center;
+        margin: 5px auto;
+      }
+
+      .car_data_branch p:nth-child(1) , .car_data_date p:nth-child(1) {
+        font-weight: bold;
+      }
+
+      .table_head th {
+        width: max-content;
+        padding: 10px;
+        border-bottom: 1px solid black;
+      }
+
+      .table_body td {
+      padding: 5px;
+      width: max-content;
+      border-bottom: 1px solid black;
+      }
+
+      .table_body tr td:nth-child(2){
+        font-weight: bold;
+      }
+
+      .car_product_list {
+        color: black;
+        width: 90%;
+        margin: 20px auto;
+        max-width: 400px;
+        text-align: center;
+        border-collapse: collapse;
+        table-layout: fixed;
+      
+      }
+
+      .car_data_observation {
+        text-align: center; 
+        padding: 20px; 
+        border: 1px solid black; 
+        margin: 20px 0;
+        width: 80%;
+        max-width: 400px; 
+        margin-left: auto; 
+        margin-right: auto; 
+        border-radius: 8px; 
+      }
+
+      .car_data_observation p:nth-child(1) {
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .car_total {
+        display: flex;
+        font-weight: bold;
+        width: 80%;
+        justify-content: center;
+        gap: 50px;
+        margin: 5px auto;
+      }
+
+    </style>
     <header class="car_header">        
-      <img src="./Imagenes/logo_drive.png" alt="logo drive pizza">
+      <img id="logo-image" src="/assets/logo_drive.png" alt="logo drive pizza negro">
       <h1>PEDIDO SEDE</h1>
     </header>
       <form class="car_container">
@@ -142,7 +249,7 @@ const OrderDetails = () => {
           <div class="car_data_date">
             <p>FECHA</p>
             <p id="delibery-date">${orderToShow.deliveryDate}</p>
-          </div>  
+          </div>
         </div>
         <table class="car_product_list">
           <thead class="table_head">
@@ -153,21 +260,18 @@ const OrderDetails = () => {
               </tr>
           </thead>
           <tbody class="table_body" id="table-body">
-
             ${orderToShow.products.map(product => {
-              return `<tr>
+                return `<tr>
                   <td>${product.name}</td>
                   <td>${product.quantity}</td>
                   <td>${new Intl.NumberFormat('es-CO', {
-              style: 'currency',
-              currency: 'COP',
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 2
-            }).format(product.totalPrice)}</td>
-              </tr>`
-
-            }
-            )}
+                    style: 'currency',
+                    currency: 'COP',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2
+                  }).format(product.totalPrice)}</td>
+                </tr>`
+            }).join('')}
           </tbody>
         </table>
         <div class="car_data_observation">
@@ -198,13 +302,29 @@ const OrderDetails = () => {
   const iframe = iframeRef.current;
   if (iframe) {
     // Escribir el contenido en el iframe
-    iframe.contentDocument.open();
-    iframe.contentDocument.write(orderHtml);
-    iframe.contentDocument.close();
+    iframe.contentDocument.open()
+    iframe.contentDocument.write(orderHtml)
+    iframe.contentDocument.close()
 
-    // Disparar la acción de impresión
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
+    const logoImage = iframe.contentDocument.getElementById('logo-image')
+
+    if (logoImage) {
+      const printOnLoad = () => {
+        // Disparar la acción de impresión
+        iframe.contentWindow.focus()
+        iframe.contentWindow.print()
+      }
+
+      const tryPrint = () => {
+        if (logoImage.complete) {
+          printOnLoad()
+        } else {
+          setTimeout(tryPrint, 200)
+        }
+      }
+
+      tryPrint()
+    }
   }
  }
 
@@ -341,7 +461,7 @@ const OrderDetails = () => {
               Editar</button>
             <button 
               className="py-1 px-2 h-8 w-max bg-white rounded self-center border solid text-sm shadow-sm"
-              onClick={HandlePrint}
+              onClick={handlePrint}
             >
               <PrinterIcon className="size-4 inline-block mr-1"></PrinterIcon>
               Imprimir</button>
